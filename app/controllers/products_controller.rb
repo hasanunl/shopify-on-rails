@@ -7,7 +7,7 @@ class ProductsController < ApplicationController
   end
 
   def send_gift
-    @variant.send_gift
+    @variant.send_gift(params[:email])
   end
 
   def show
@@ -20,6 +20,7 @@ class ProductsController < ApplicationController
 
   def create
     @product = Product.new(product_params)
+   # @product.image.attach(params[:image])
     if @product.save
       redirect_to products_path
     else
@@ -30,7 +31,7 @@ class ProductsController < ApplicationController
   private
 
   def product_params
-    params.require(:product).permit(:name, :price, :description, variants_attributes: [:id, :stock, :name])
+    params.require(:product).permit(:name, :price, :description, :image, variants_attributes: [:id, :stock, :name])
   end
 
   def find_variant

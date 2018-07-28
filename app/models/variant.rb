@@ -1,8 +1,8 @@
 class Variant < ApplicationRecord
   belongs_to :product, optional: true
 
-  def send_gift
-    decrement!(:stock)
+  def send_gift(email)
+    SendGiftMailer.send_gift(email).deliver_later if decrement!(:stock)
   end
 
   def stock_information
